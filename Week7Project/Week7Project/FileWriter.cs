@@ -56,7 +56,7 @@ namespace Week7Project
             return resHeader.ToString();
         }
 
-        public string Header(string studentName) //creates the header for the student's check out file
+        public string StudentHeader(string studentName) //creates the header for the student's check out file
         {
             string studentID;
 
@@ -71,6 +71,23 @@ namespace Week7Project
             
             return header.ToString();
         }
+
+        public void WriteStudentFile(string name)
+        {
+            string filename = name + ".txt";
+            FileWriter writing = new FileWriter();
+
+            StreamWriter writer = new StreamWriter(filename);
+            using (writer)
+            {
+                writer.WriteLine(writing.StudentHeader(name));
+
+
+            }
+
+
+        }
+
 
         public List<string> AddToList (string resource)
         {
@@ -124,13 +141,14 @@ namespace Week7Project
         {
             FileWriter writer = new FileWriter();
 
+            Dictionary <string, bool> resources = Data.Resources;
+
             string fileName = COList[0] + ".txt";
 
-            string header = writer.Header(COList[0]);
+            string header = writer.StudentHeader(COList[0]);
 
             StreamWriter writing = new StreamWriter(fileName);
-
-            using (writing) //left off here!
+            using (writing) 
             {
                 writing.WriteLine(header);
                 writing.WriteLine();
@@ -140,7 +158,13 @@ namespace Week7Project
                 writing.WriteLine(COList[3]);
             }
 
-
+            for (int i = 0; i < COList.Count; i++)
+            {
+                if (resources.ContainsKey(COList[i]))
+                {
+                    resources[COList[i]] = false;
+                }
+            }
         }
 
 

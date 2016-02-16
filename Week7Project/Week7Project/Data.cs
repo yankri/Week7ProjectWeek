@@ -12,6 +12,7 @@ namespace Week7Project
         public List<string> StudentList { get; set; }
         public Dictionary<string, string> StudentIDs { get; set; }
         public List<string> LCStudents { get; set; }
+        public static List<string> COList { get; set; }
 
         public Data()
         {
@@ -19,6 +20,7 @@ namespace Week7Project
             StudentIDs = studentIDs;
             StudentList = students;
             LCStudents = LCstudents;
+            COList = coList;
         }
 
         Dictionary<string, string> studentIDs = new Dictionary<string, string>()
@@ -38,6 +40,8 @@ namespace Week7Project
             {"123", "Sirahn Butler" },
             {"124", "Lawrence Hudson" }
         };
+
+        List<string> coList = new List<string>();
 
         Dictionary<string, bool> resources = MakeDictionary();
 

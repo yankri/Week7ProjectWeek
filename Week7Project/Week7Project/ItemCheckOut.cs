@@ -8,12 +8,14 @@ namespace Week7Project
 {
     class ItemCheckOut
     {
+
         public Dictionary<string, bool> Resources { get; set; }
 
         public ItemCheckOut ()
         {
             Resources = resources;
         }
+
         Data data = new Data();
 
         FileWriter writer = new FileWriter();
@@ -24,9 +26,10 @@ namespace Week7Project
 
         public void CheckOut ()
         {
+            Data data = new Data();
             Console.Clear();
-
-            List<string> COList = new List<string>();
+            FileWriter writer =  new FileWriter();
+            List<string> COList = Data.COList;
 
             while (true)
             {
@@ -67,6 +70,8 @@ namespace Week7Project
                 }
             }
 
+            writer.CheckOutResource(COList);
+            writer.WriteResourceFiles(resources);
         }
     }
 }

@@ -31,6 +31,10 @@ namespace Week7Project
             {
                 PrintMenu();
                 FileReader reader = new FileReader();
+                Data data = new Data();
+                FileWriter writer  = new FileWriter();
+                ItemCheckOut checkout = new ItemCheckOut(); 
+                ItemReturn returnItem = new ItemReturn();
 
                 int choice;
                 string menuChoice = Console.ReadLine();
@@ -48,6 +52,13 @@ namespace Week7Project
                     case 3:
                         reader.ViewStudentAccount();
                         break;
+                    case 4:
+                        checkout.CheckOut();
+                        break;
+                    case 5:
+                        returnItem.ReturnItem();
+                        break;
+
                 }
 
 
