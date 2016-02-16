@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Week7Project
 {
     class FileWriter
     {
+        
         public List<string> resources = new List<string>();
 
         public Dictionary<string, string> StudentIDs = new Dictionary<string, string>()
@@ -30,11 +32,35 @@ namespace Week7Project
 
         Dictionary<string, List<string>> CheckOuts = new Dictionary<string, List<string>> (){ };
 
-        public string header(string studentName)
-        {
-            StringBuilder header = new StringBuilder();
 
+        public string resourceHeader (int choice)
+        {
+            StringBuilder resHeader = new StringBuilder();
+
+            switch (choice)
+            {
+                case 1: //all resources
+                    resHeader.Append("All Resources");
+                    break;
+                case 2: //Available resources
+                    resHeader.Append("Available Resources");
+                    break;
+                case 3:
+                    resHeader.Append("Checked Out Resources");
+                    break;
+                default:
+                    resHeader.Append("Resources");
+                    break;
+            }
+
+            return resHeader.ToString();
+        }
+
+        public string Header(string studentName) //creates the header for the student's check out file
+        {
             string studentID;
+
+            StringBuilder header = new StringBuilder();
 
             header.Append("Student: " + studentName + "\nStudent ID: ");
 
@@ -53,6 +79,68 @@ namespace Week7Project
             checkedOut.Add(resource);
 
             return checkedOut;
+        }
+
+        public void WriteResourceFiles (Dictionary<string, bool> resources)
+        {
+            StreamWriter allResources = new StreamWriter("ResourceList.txt");
+
+            using (allResources)
+            {
+                foreach (KeyValuePair<string, bool> pair in resources)
+                {
+                    allResources.WriteLine(pair.Key);
+                }
+            }
+
+            StreamWriter available = new StreamWriter("AvailableResources.txt");
+
+            using (available)
+            {
+                foreach (KeyValuePair<string, bool> pair in resources)
+                {
+                    if (pair.Value == true)
+                    {
+                        available.WriteLine(pair.Key);
+                    }
+                }
+            }
+
+            StreamWriter checkedOut = new StreamWriter("CheckedOutResources.txt");
+
+            using (checkedOut)
+            {
+                foreach (KeyValuePair<string, bool> pair in resources)
+                {
+                    if (pair.Value == false)
+                    {
+                        checkedOut.WriteLine(pair.Key);
+                    }
+                }
+            }
+        }
+
+        public void CheckOutResource (List<string> COList) //make sure this will be case insensitive
+        {
+            FileWriter writer = new FileWriter();
+
+            string fileName = COList[0] + ".txt";
+
+            string header = writer.Header(COList[0]);
+
+            StreamWriter writing = new StreamWriter(fileName);
+
+            using (writing) //left off here!
+            {
+                writing.WriteLine(header);
+                writing.WriteLine();
+                writing.WriteLine("Checked Out Resources: ");
+                writing.WriteLine(COList[1]);
+                writing.WriteLine(COList[2]);
+                writing.WriteLine(COList[3]);
+            }
+
+
         }
 
 

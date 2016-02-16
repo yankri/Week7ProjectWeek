@@ -9,23 +9,14 @@ namespace Week7Project
 {
     class Program
     {
-       
-
-        public void UpdateResources ()
-        {
-
-        }
-
         static void Main(string[] args)
         {
-            string name = "Krista Scholdberg";
-
-            FileReader reader = new FileReader();
-            reader.ViewStudentAccount(name);
-
-            reader.ViewStudentList();
+            MainMenu menu = new MainMenu();
+            menu.Menu();
 
 
-    }
+
+
+        }
     }
 }

@@ -8,15 +8,17 @@ namespace Week7Project
 {
     class Data
     {
-        public Dictionary<string,bool> Resources { get; set; }
+        public static Dictionary<string, bool> Resources { get; set; }
         public List<string> StudentList { get; set; }
         public Dictionary<string, string> StudentIDs { get; set; }
+        public List<string> LCStudents { get; set; }
 
         public Data()
         {
             Resources = resources;
             StudentIDs = studentIDs;
             StudentList = students;
+            LCStudents = LCstudents;
         }
 
         Dictionary<string, string> studentIDs = new Dictionary<string, string>()
@@ -39,7 +41,21 @@ namespace Week7Project
 
         Dictionary<string, bool> resources = MakeDictionary();
 
-        List<string> students = new List<string> { "Krista Scholdberg", "Ashley Stewart", "Cadale Thomas", "Lawrence Hudson", "Jennifer Evans", "Kimberly Vargas", "Jacob Lockyer", "Richard Raponi", "Imari Childress", "Mary Winkelman", "Cameron Robinson", "Margaret Landefield", "Quinn Bennett" };
+        static List<string> students = new List<string> { "Krista Scholdberg", "Ashley Stewart", "Cadale Thomas", "Lawrence Hudson", "Jennifer Evans", "Kimberly Vargas", "Jacob Lockyer", "Richard Raponi", "Imari Childress", "Mary Winkelman", "Cameron Robinson", "Margaret Landefield", "Quinn Bennett" };
+        List<string> LCstudents = LowerCaseStudents();
+
+        public static List<string> LowerCaseStudents()
+        {
+            List<string> LCstudents = new List<string>();
+
+            for (int i = 0; i < students.Count; i++)
+            {
+                students[i] = students[i].ToLower();
+                LCstudents.Add(students[i]);
+            }
+
+            return LCstudents;
+        }
 
         public static Dictionary<string, bool> MakeDictionary ()
         {

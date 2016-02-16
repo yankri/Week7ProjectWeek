@@ -9,7 +9,7 @@ namespace Week7Project
 {
     class MainMenu
     {
-        
+
 
         public void PrintMenu()
         {
@@ -25,7 +25,7 @@ namespace Week7Project
             }
         }
 
-        public void Menu ()
+        public void Menu()
         {
             while (true)
             {
@@ -56,4 +56,5 @@ namespace Week7Project
 
 
         }
+    }
 }
