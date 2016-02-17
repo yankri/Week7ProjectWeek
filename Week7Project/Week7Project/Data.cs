@@ -8,48 +8,46 @@ namespace Week7Project
 {
     class Data
     {
-        public static Dictionary<string, bool> Resources { get; set; }
+        public Dictionary<string, bool> Resources { get; set; }
         public List<string> StudentList { get; set; }
         public Dictionary<string, string> StudentIDs { get; set; }
         public List<string> LCStudents { get; set; }
-        public static List<string> COList { get; set; }
+        public List<string> COList { get; set; }
+        public List<string> LCResources { get; set; }
 
         public Data()
         {
-            Resources = resources;
+            Resources = MakeDictionary();
             StudentIDs = studentIDs;
-            StudentList = students;
-            LCStudents = LCstudents;
+            StudentList = studentIDs.Keys.ToList();
+            LCStudents = LowerCaseStudents();
             COList = coList;
+            LCResources = MakeLCResourcesList(Resources);
         }
 
-        Dictionary<string, string> studentIDs = new Dictionary<string, string>()
+        public Dictionary<string, string> studentIDs = new Dictionary<string, string>()
         {
-            {"111", "Krista Scholdberg" },
-            {"112", "Ashley Stewart" },
-            {"113", "Cadale Thomas" },
-            {"114", "Jennifer Evans" },
-            {"115", "Richard Raponi" },
-            {"116", "Mary Winkelman" },
-            {"117", "Imari Childress" },
-            {"118", "Jacob Lockyer" },
-            {"119", "Quinn Bennet" },
-            {"120", "Margaret Landefield" },
-            {"121", "Kim vargas" },
-            {"122", "Cameron Robinson" },
-            {"123", "Sirahn Butler" },
-            {"124", "Lawrence Hudson" }
+            { "krista scholdberg", "111"},
+            {"ashley stewart", "112" },
+            { "cadale thomas", "113"},
+            { "jennifer evans", "114"},
+            { "richard raponi", "115"},
+            { "mary winkelman","116" },
+            { "imari childress","117" },
+            { "jacob lockyer","118" },
+            { "quinn bennet","119"},
+            { "margaret landefield","120" },
+            { "kim vargas", "121" },
+            { "cameron robinson", "122"},
+            { "sirahn butler", "123"},
+            { "lawrence hudson","124" }
         };
 
         List<string> coList = new List<string>();
 
-        Dictionary<string, bool> resources = MakeDictionary();
-
-        static List<string> students = new List<string> { "Krista Scholdberg", "Ashley Stewart", "Cadale Thomas", "Lawrence Hudson", "Jennifer Evans", "Kimberly Vargas", "Jacob Lockyer", "Richard Raponi", "Imari Childress", "Mary Winkelman", "Cameron Robinson", "Margaret Landefield", "Quinn Bennett" };
-        List<string> LCstudents = LowerCaseStudents();
-
-        public static List<string> LowerCaseStudents()
+        public List<string> LowerCaseStudents()
         {
+            List<string> students = new List<string> { "Krista Scholdberg", "Ashley Stewart", "Cadale Thomas", "Lawrence Hudson", "Jennifer Evans", "Kimberly Vargas", "Jacob Lockyer", "Richard Raponi", "Imari Childress", "Mary Winkelman", "Cameron Robinson", "Margaret Landefield", "Quinn Bennett" };
             List<string> LCstudents = new List<string>();
 
             for (int i = 0; i < students.Count; i++)
@@ -61,15 +59,28 @@ namespace Week7Project
             return LCstudents;
         }
 
-        public static Dictionary<string, bool> MakeDictionary ()
+        public Dictionary<string, bool> MakeDictionary ()
         {
-            Dictionary<string, bool> resources = new Dictionary<string, bool>();
+            Dictionary<string, bool> resources = new Dictionary<string, bool>(StringComparer.InvariantCultureIgnoreCase);
             FileReader reader = new FileReader();
 
             resources = reader.PopulateAvailableResourcesInDictionary();
             reader.PopulateCheckedOutResourcesInDictionary(resources);
 
             return resources;
+        }
+
+        public List<string> MakeLCResourcesList (Dictionary<string, bool> resources)
+        {
+            List<string> lcresources = new List<string>();
+            string key;
+            foreach (KeyValuePair <string, bool> pair in resources)
+            {
+                key = pair.Key.ToLower();
+                lcresources.Add(key);
+            }
+
+            return lcresources;
         }
     }
 }

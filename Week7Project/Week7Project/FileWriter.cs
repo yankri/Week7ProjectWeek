@@ -9,30 +9,6 @@ namespace Week7Project
 {
     class FileWriter
     {
-        
-        public List<string> resources = new List<string>();
-
-        public Dictionary<string, string> StudentIDs = new Dictionary<string, string>()
-        {
-            {"111", "Krista Scholdberg" },
-            {"112", "Ashley Stewart" },
-            {"113", "Cadale Thomas" },
-            {"114", "Jennifer Evans" },
-            {"115", "Richard Raponi" },
-            {"116", "Mary Winkelman" },
-            {"117", "Imari Childress" },
-            {"118", "Jacob Lockyer" },
-            {"119", "Quinn Bennet" },
-            {"120", "Margaret Landefield" },
-            {"121", "Kim Vargas" },
-            {"122", "Cameron Robinson" },
-            {"123", "Sirahn Butler" },
-            {"124", "Lawrence Hudson" }
-        };
-
-        Dictionary<string, List<string>> CheckOuts = new Dictionary<string, List<string>> (){ };
-
-
         public string resourceHeader (int choice)
         {
             StringBuilder resHeader = new StringBuilder();
@@ -59,20 +35,29 @@ namespace Week7Project
         public string StudentHeader(string studentName) //creates the header for the student's check out file
         {
             string studentID;
+            Data data = new Data();
 
             StringBuilder header = new StringBuilder();
 
-            header.Append("Student: " + studentName + "\nStudent ID: ");
+            header.Append("Student: " + studentName);
+            header.AppendLine();
+            header.Append("Student ID: ");
 
-            if (StudentIDs.TryGetValue(studentName, out studentID) == true)
+            string name = studentName.ToLower();
+
+            if (data.StudentIDs.TryGetValue(name, out studentID) == true)
             {
+                studentID = data.StudentIDs[name]; 
+                Console.WriteLine(studentID);
                 header.Append(studentID);
             }
-            
+
+            header.AppendLine();
+
             return header.ToString();
         }
 
-        public void WriteStudentFile(string name)
+        public void WriteStudentFile(string name, List<string> COList)
         {
             string filename = name + ".txt";
             FileWriter writing = new FileWriter();
@@ -82,12 +67,12 @@ namespace Week7Project
             {
                 writer.WriteLine(writing.StudentHeader(name));
 
-
+                for (int i = 1; i < COList.Count; i++)
+                {
+                    writer.WriteLine(COList[i]);
+                }
             }
-
-
         }
-
 
         public List<string> AddToList (string resource)
         {
@@ -140,8 +125,9 @@ namespace Week7Project
         public void CheckOutResource (List<string> COList) //make sure this will be case insensitive
         {
             FileWriter writer = new FileWriter();
+            Data data = new Data();
 
-            Dictionary <string, bool> resources = Data.Resources;
+            Dictionary <string, bool> resources = data.Resources;
 
             string fileName = COList[0] + ".txt";
 
@@ -153,16 +139,18 @@ namespace Week7Project
                 writing.WriteLine(header);
                 writing.WriteLine();
                 writing.WriteLine("Checked Out Resources: ");
-                writing.WriteLine(COList[1]);
-                writing.WriteLine(COList[2]);
-                writing.WriteLine(COList[3]);
+
+                for (int i = 1; i < COList.Count; i++)
+                {
+                    writing.WriteLine(COList[i]);
+                }
             }
 
-            for (int i = 0; i < COList.Count; i++)
+            for (int i = 0; i < COList.Count; i++) //updates the resources dictionary
             {
                 if (resources.ContainsKey(COList[i]))
                 {
-                    resources[COList[i]] = false;
+                    resources[COList[i]] = false; //false because its no longer available
                 }
             }
         }

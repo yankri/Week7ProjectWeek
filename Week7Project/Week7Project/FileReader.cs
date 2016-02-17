@@ -38,9 +38,7 @@ namespace Week7Project
 
             using (reader)
             {
-                string line = reader.ReadLine();
-                resources.Add(line);
-
+                string line = "";
                 while (line != null)
                 {
                     line = reader.ReadLine();
@@ -49,7 +47,7 @@ namespace Week7Project
             }
         }
 
-        public void ViewStudentAccount()
+        public void ViewStudentAccount() 
         {
             Data data = new Data();
             string name;
@@ -59,7 +57,8 @@ namespace Week7Project
                 Console.WriteLine("Enter a name: ");
                 name = Console.ReadLine();
 
-                if (data.LCStudents.Contains(name))
+                string checkName = name.ToLower();
+                if (data.LCStudents.Contains(checkName))
                 {
                     break;
                 }
@@ -73,7 +72,7 @@ namespace Week7Project
             string fileName = name + ".txt";
 
             StreamReader reader = new StreamReader(fileName);
-
+            Console.Clear();
             using (reader)
             {
                 string line = reader.ReadLine();
@@ -85,10 +84,13 @@ namespace Week7Project
                     Console.WriteLine(line);
                 }
             }
+            Console.WriteLine("\nPress any key to continue");
+            Console.ReadKey();
         }
 
         public void ViewStudentList ()
         {
+            Console.Clear();
             FileReader reader = new FileReader();
 
             List<string> students = reader.ReadStudentFile();
@@ -98,26 +100,34 @@ namespace Week7Project
             {
                 Console.WriteLine(person);
             }
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
         }
 
-        public Dictionary<string, bool> PopulateAvailableResourcesInDictionary ()
+        public Dictionary<string, bool> PopulateAvailableResourcesInDictionary()
         {
-            Dictionary<string, bool> resources = new Dictionary<string, bool>();
+            Dictionary<string, bool> resources = new Dictionary<string, bool>(StringComparer.InvariantCultureIgnoreCase);
 
             StreamReader reader = new StreamReader("AvailableResources.txt");
 
-            using (reader)
-            {
                 string line = reader.ReadLine();
-                resources.Add(line, true);
 
-                while (line != null)
+                if (line == null || line == "none")
                 {
-                    line = reader.ReadLine();
-                    resources.Add(line, true);
+                    reader.Close();
                 }
-            }
+                else
+                {
+                    resources.Add(line, true);
 
+                    while (!reader.EndOfStream) //ends when the stream is at the end
+                    {
+                        line = reader.ReadLine();
+                        resources.Add(line, true);
+                    }
+                    reader.Close();
+                }
+            
             return resources;
         }
 
@@ -128,31 +138,60 @@ namespace Week7Project
             using (reader)
             {
                 string line = reader.ReadLine();
-                resources.Add(line, false);
 
-                while (line != null)
+                if (line == null || line == "none")
                 {
-                    line = reader.ReadLine();
-                    resources.Add(line, false);
+                    reader.Close();
                 }
-            }
+                else
+                {
+                    resources.Add(line, false);
+                    while (!reader.EndOfStream)
+                    {
+                        line = reader.ReadLine();
+                        resources.Add(line, false);
+                    }
+                }
+            } 
         }
 
         public void AvailableResources()
         {
+            List<string> availableResources = new List<string>();
+
             StreamReader reader = new StreamReader("AvailableResources.txt");
 
             using (reader)
             {
                 string line = reader.ReadLine();
-                Console.WriteLine(line);
+
+                if (line == null)
+                {
+                    reader.Close();
+                }
+                else
+                {
+                    availableResources.Add(line);
+                }
 
                 while (line != null)
                 {
                     line = reader.ReadLine();
-                    Console.WriteLine(line);
+                    availableResources.Add(line);
                 }
             }
+
+            availableResources.Sort();
+
+            Console.Clear();
+
+            foreach (string title in availableResources)
+            {
+                Console.WriteLine(title);
+            }
+
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey();
         }
 
 

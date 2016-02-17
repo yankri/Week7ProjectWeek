@@ -11,12 +11,22 @@ namespace Week7Project
     {
         static void Main(string[] args)
         {
-            MainMenu menu = new MainMenu();
-            menu.Menu();
+            /*
+            Data data = new Data();
+
+           foreach(var pair in data.Resources)
+            {
+                Console.WriteLine(pair.ToString());
+            }
+            */
+           MainMenu menu = new MainMenu();
+           menu.Menu();
+           
 
 
-
-
+            //resource list isn't case insensitive
+            // add rewriting the resource files to update available and checked out books
+            //item return
         }
     }
 }

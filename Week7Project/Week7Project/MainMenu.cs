@@ -9,14 +9,12 @@ namespace Week7Project
 {
     class MainMenu
     {
-
-
         public void PrintMenu()
         {
-            Console.Title = "Welcome to Bootcamp Resources Checkout System!";
+            Console.Title = "Bootcamp Resources Checkout System";
 
             string[] mainMenu = { "1 - View Students", "2 - View Available Resources", "3 - View Student Accounts", "4 - Checkout Item", "5 - Return Item", "6 - Exit", "7 - Start Over", "8 - Admin Menu\n" };
-            Console.WriteLine("\n\n" + Console.Title + "\n\n");
+            Console.WriteLine("\nWelcome to Bootcamp Resources Checkout System!\n\n");
 
             Console.WriteLine("Enter a number to select a menu option: \n");
             foreach (string word in mainMenu)
@@ -29,12 +27,18 @@ namespace Week7Project
         {
             while (true)
             {
+                Console.Clear();
                 PrintMenu();
                 FileReader reader = new FileReader();
                 Data data = new Data();
                 FileWriter writer  = new FileWriter();
                 ItemCheckOut checkout = new ItemCheckOut(); 
                 ItemReturn returnItem = new ItemReturn();
+
+                Dictionary<string, bool> resources = data.Resources;
+
+                List<string> COList = data.COList;
+                List<string> LCstudents = data.LCStudents;
 
                 int choice;
                 string menuChoice = Console.ReadLine();
@@ -58,11 +62,7 @@ namespace Week7Project
                     case 5:
                         returnItem.ReturnItem();
                         break;
-
                 }
-
-
-
             }
 
 

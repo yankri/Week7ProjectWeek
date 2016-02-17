@@ -9,13 +9,19 @@ namespace Week7Project
 {
     class ItemReturn
     {
+
+        public ItemReturn ()
+        {
+            COList = data.COList;
+            resources = data.Resources;
+        }
         Data data = new Data();
         FileReader reader = new FileReader();
         FileWriter writer = new FileWriter();
 
-        List<string> COList = Data.COList;
+        List<string> COList;
 
-        Dictionary<string, bool> resources = Data.Resources;
+        Dictionary<string, bool> resources;
 
         public void ReturnItem ()
         {
