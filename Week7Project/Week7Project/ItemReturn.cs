@@ -51,26 +51,24 @@ namespace Week7Project
                 {
                     string filename = name + ".txt";
                     string toDelete = null;
-                    int LineNumber = 0;
+                    string line = null;
 
                     StreamReader reader = new StreamReader(filename);
                     using (reader)
                     {
                         while (!reader.EndOfStream)
                         {
-                            string line = reader.ReadLine();
-                            LineNumber++;
-                            if (resources.ContainsKey(line) && resources[line] == false)
+                            line = reader.ReadLine();
+
+                            if (resources.ContainsKey(line))
                             {
-                                resources[line] = true;
-                                toDelete = line;
+                                resources[title] = true;
+                                toDelete = title;
+                                break;
                             }
                         }
                     }
-
-                    var oldLines = File.ReadAllLines(filename);
-                    var newLines = oldLines.Where(line => !line.Contains(toDelete));
-                    File.WriteAllLines(filename, newLines); 
+                    RemoveReturnedItemFromStudentFile(filename, toDelete);
                     break;
                 }
                 else
@@ -82,9 +80,13 @@ namespace Week7Project
 
             writer.WriteResourceFiles(resources);
             writer.StudentHeader(name);
-            //need to rewrite student file, removing the resource
+        }
 
-
+        public void RemoveReturnedItemFromStudentFile (string filename, string toDelete)
+        {
+            var oldLines = File.ReadAllLines(filename);
+            var newLines = oldLines.Where(check => check.IndexOf(toDelete, StringComparison.OrdinalIgnoreCase) < 0);
+            File.WriteAllLines(filename, newLines);
         }
 
 

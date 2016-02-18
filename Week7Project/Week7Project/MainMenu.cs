@@ -25,7 +25,9 @@ namespace Week7Project
 
         public void Menu()
         {
-            while (true)
+            bool close = false;
+
+            while (close == false)
             {
                 Console.Clear();
                 PrintMenu();
@@ -44,7 +46,6 @@ namespace Week7Project
                 string menuChoice = Console.ReadLine();
                 Console.WriteLine();
                 bool result = int.TryParse(menuChoice, out choice);
-
                 switch (choice)
                 {
                     case 1:
@@ -62,10 +63,28 @@ namespace Week7Project
                     case 5:
                         returnItem.ReturnItem();
                         break;
+                    case 6:
+                        ClosingImage();
+                        Console.WriteLine("\nSuch quitting. Very check out. Wow.\n\n");
+                        close = true;
+                        break;
+    
                 }
             }
+        }
 
-
+        public void ClosingImage ()
+        {
+            Console.Clear();
+            StreamReader reader = new StreamReader("ClosingImage.txt");
+            using (reader)
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    Console.WriteLine(line);
+                }
+            }
         }
     }
 }
