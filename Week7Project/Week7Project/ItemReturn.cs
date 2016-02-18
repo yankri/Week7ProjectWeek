@@ -36,8 +36,19 @@ namespace Week7Project
                 if (data.StudentIDs.Keys.Contains(name.ToLower()))
                 {
                     filename = name + ".txt";
-                    ShowCheckedOutResources(filename);
-                    break;
+                        
+                    if (!File.Exists(filename))
+                    {
+                        Console.WriteLine("That user doesn't have anything checked out.");
+                        Console.WriteLine("Press any key to return to the main menu.");
+                        Console.ReadKey();
+                        return;
+                    }
+                    else
+                    {
+                        ShowCheckedOutResources(filename);
+                        break;
+                    }
                 }
                 else
                 {
@@ -52,11 +63,10 @@ namespace Week7Project
 
                 if (resources.ContainsKey(title))
                 {
-                    string toDelete = null;
-                    string line = null;
+                    string toDelete = "";
+                    string line;
 
-                    StreamReader reader = new StreamReader(filename);
-                    using (reader)
+                    using (StreamReader reader = new StreamReader(filename))
                     {
                         while (!reader.EndOfStream)
                         {
@@ -64,14 +74,26 @@ namespace Week7Project
 
                             if (resources.ContainsKey(line))
                             {
-                                resources[title] = true;
                                 toDelete = title;
+                                reader.Close();
                                 break;
                             }
                         }
+
+                        bool success = RemoveReturnedItemFromStudentFile(filename, toDelete);
+                        if (success == true)
+                        {
+                            resources[title] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("That user has not checked out that resource.");
+                            Console.WriteLine("\nPress any key to return to the main menu.");
+                            Console.ReadKey();
+                            break;
+                        }
                     }
-                    RemoveReturnedItemFromStudentFile(filename, toDelete);
-                    break;
                 }
                 else
                 {
@@ -84,11 +106,18 @@ namespace Week7Project
             writer.StudentHeader(name);
         }
 
-        public void RemoveReturnedItemFromStudentFile (string filename, string toDelete)
+        public bool RemoveReturnedItemFromStudentFile (string filename, string toDelete)
         {
             var oldLines = File.ReadAllLines(filename);
             var newLines = oldLines.Where(check => check.IndexOf(toDelete, StringComparison.OrdinalIgnoreCase) < 0);
-            File.WriteAllLines(filename, newLines);
+
+            if (oldLines.Count() == newLines.Count() || newLines.Count() == 0)
+            {
+                return false; //means it didnt work and the resource wasnt in the file
+            }
+                File.WriteAllLines(filename, newLines);
+                return true; // means it did work and the resource was in the file 
+            
         }
 
         public void ShowCheckedOutResources(string fileName)
