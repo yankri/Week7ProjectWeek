@@ -15,7 +15,7 @@ namespace Week7Project
         {
             Resources = resources;
             resources = data.Resources; //if the assignment refers to something else (another class) it has to be done in the constructor
-            students = data.LCStudents;
+            studentIDs = data.StudentIDs;
         }
 
         Data data = new Data();
@@ -23,7 +23,7 @@ namespace Week7Project
         FileReader reader = new FileReader();
 
         Dictionary<string, bool> resources;
-        List<string> students;
+        Dictionary<string, string> studentIDs;
 
         public void CheckOut ()
         {
@@ -37,7 +37,7 @@ namespace Week7Project
                 Console.WriteLine("Enter your name: ");
                 string name = Console.ReadLine(); //make sure this is actually case insensitive
 
-                if (DoThingers.CIContains(students, name))
+                if (DoThingers.CIContains(studentIDs, name))
                 {
                     COList.Add(name);
                     break;
@@ -49,7 +49,7 @@ namespace Week7Project
             }
 
             while(true)
-            { // update this so it's case insensitive
+            { 
                 Console.WriteLine("Enter the name of the resource you want to check out: ");
                 string title = Console.ReadLine();
 
@@ -59,7 +59,6 @@ namespace Week7Project
 
                     bool checker;
                     resources.TryGetValue(title, out checker);
-                    bool poop = resources.TryGetValue(title, out checker);
 
                     if (checker == true)
                     {
@@ -89,7 +88,7 @@ namespace Week7Project
             writer.WriteResourceFiles(resources);
         }
 
-        public void UpdateCheckOutDictionaryAvailability (Dictionary<string, bool> resources, string title) //START HERE  update this stupid thing to be case insensitive
+        public void UpdateCheckOutDictionaryAvailability (Dictionary<string, bool> resources, string title) 
         {
             if (DoThingers.CIContains(resources, title) == true)
             {

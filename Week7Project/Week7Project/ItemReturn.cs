@@ -26,14 +26,17 @@ namespace Week7Project
         public void ReturnItem ()
         {
             string name;
+            string filename;
 
             while (true)
             {
                 Console.WriteLine("Enter your name: ");
                 name = Console.ReadLine();
 
-                if (data.LCStudents.Contains(name.ToLower()))
+                if (data.StudentIDs.Keys.Contains(name.ToLower()))
                 {
+                    filename = name + ".txt";
+                    ShowCheckedOutResources(filename);
                     break;
                 }
                 else
@@ -49,7 +52,6 @@ namespace Week7Project
 
                 if (resources.ContainsKey(title))
                 {
-                    string filename = name + ".txt";
                     string toDelete = null;
                     string line = null;
 
@@ -89,6 +91,25 @@ namespace Week7Project
             File.WriteAllLines(filename, newLines);
         }
 
+        public void ShowCheckedOutResources(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                StreamReader reader = new StreamReader(fileName); //figure out how to check if a filename exists
+                Console.Clear();
+                using (reader)
+                {
+                    string line = reader.ReadLine();
+                    Console.WriteLine(line);
 
+                    while (line != null)
+                    {
+                        line = reader.ReadLine();
+                        Console.WriteLine(line);
+                    }
+                }
+            }
+           
+        }
     }
 }

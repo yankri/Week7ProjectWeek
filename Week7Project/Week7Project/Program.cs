@@ -24,9 +24,14 @@ namespace Week7Project
            
 
 
-            //resource list isn't case insensitive
-            // add rewriting the resource files to update available and checked out books
-            //item return
+            
+            //at start up, needs to make files for all the students or check if they have a file and if not say they have nothign checked out
+            //stringbuilder....
+            //rubric check.  use the rubric and score myself for the submission form
+            //add escapes from inner menus
+            //add list of checked out items for the user when returning an item
+            //make sure someone cant return something they dont have
+
         }
     }
 }

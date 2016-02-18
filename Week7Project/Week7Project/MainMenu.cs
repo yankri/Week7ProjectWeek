@@ -13,7 +13,7 @@ namespace Week7Project
         {
             Console.Title = "Bootcamp Resources Checkout System";
 
-            string[] mainMenu = { "1 - View Students", "2 - View Available Resources", "3 - View Student Accounts", "4 - Checkout Item", "5 - Return Item", "6 - Exit", "7 - Start Over", "8 - Admin Menu\n" };
+            string[] mainMenu = { "1 - View Students", "2 - View Available Resources", "3 - View Student Accounts", "4 - Checkout Item", "5 - Return Item", "6 - Exit", "7 - Admin Menu\n" };
             Console.WriteLine("\nWelcome to Bootcamp Resources Checkout System!\n\n");
 
             Console.WriteLine("Enter a number to select a menu option: \n");
@@ -40,7 +40,6 @@ namespace Week7Project
                 Dictionary<string, bool> resources = data.Resources;
 
                 List<string> COList = data.COList;
-                List<string> LCstudents = data.LCStudents;
 
                 int choice;
                 string menuChoice = Console.ReadLine();
@@ -68,7 +67,8 @@ namespace Week7Project
                         Console.WriteLine("\nSuch quitting. Very check out. Wow.\n\n");
                         close = true;
                         break;
-    
+                    default:
+                        continue;
                 }
             }
         }

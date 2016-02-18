@@ -47,7 +47,7 @@ namespace Week7Project
             }
         }
 
-        public void ViewStudentAccount() 
+        public void ViewStudentAccount()
         {
             Data data = new Data();
             string name;
@@ -58,35 +58,44 @@ namespace Week7Project
                 name = Console.ReadLine();
 
                 string checkName = name.ToLower();
-                if (data.LCStudents.Contains(checkName))
-                {
-                    break;
-                }
-                else
+                if (!data.StudentIDs.Keys.Contains(checkName))
                 {
                     Console.WriteLine("Error: That name does not exist.");
                     continue;
                 }
-            }
 
-            string fileName = name + ".txt";
+                string fileName = name + ".txt";
 
-            StreamReader reader = new StreamReader(fileName);
-            Console.Clear();
-            using (reader)
-            {
-                string line = reader.ReadLine();
-                Console.WriteLine(line);
-
-                while (line != null)
+                if (File.Exists(fileName))
                 {
-                    line = reader.ReadLine();
-                    Console.WriteLine(line);
+                    StreamReader reader = new StreamReader(fileName); //figure out how to check if a filename exists
+                    Console.Clear();
+                    using (reader)
+                    {
+                        string line = reader.ReadLine();
+                        Console.WriteLine(line);
+
+                        while (line != null)
+                        {
+                            line = reader.ReadLine();
+                            Console.WriteLine(line);
+                        }
+                    }
+                    Console.WriteLine("\nPress any key to continue");
+                    Console.ReadKey();
+                    break;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("\nERROR: That user does not have any books checked out.");
+                    Console.WriteLine("\nPress any key to continue");
+                    Console.ReadKey();
+                    break;
                 }
             }
-            Console.WriteLine("\nPress any key to continue");
-            Console.ReadKey();
         }
+        
 
         public void ViewStudentList ()
         {

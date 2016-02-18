@@ -21,11 +21,8 @@ namespace Week7Project
                 case 2: //Available resources
                     resHeader.Append("Available Resources");
                     break;
-                case 3:
+                case 3://checked out resources
                     resHeader.Append("Checked Out Resources");
-                    break;
-                default:
-                    resHeader.Append("Resources");
                     break;
             }
 
@@ -122,7 +119,7 @@ namespace Week7Project
             }
         }
 
-        public void CheckOutResource (List<string> COList) //make sure this will be case insensitive
+        public void CheckOutResource (List<string> COList) 
         {
             FileWriter writer = new FileWriter();
             Data data = new Data();

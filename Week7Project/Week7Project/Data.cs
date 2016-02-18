@@ -11,53 +11,34 @@ namespace Week7Project
         public Dictionary<string, bool> Resources { get; set; }
         public List<string> StudentList { get; set; }
         public Dictionary<string, string> StudentIDs { get; set; }
-        public List<string> LCStudents { get; set; }
         public List<string> COList { get; set; }
-        public List<string> LCResources { get; set; }
 
         public Data()
         {
             Resources = MakeDictionary();
             StudentIDs = studentIDs;
-            StudentList = studentIDs.Keys.ToList();
-            LCStudents = LowerCaseStudents();
             COList = coList;
-            LCResources = MakeLCResourcesList(Resources);
         }
 
-        public Dictionary<string, string> studentIDs = new Dictionary<string, string>()
+        public Dictionary<string, string> studentIDs = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
         {
-            { "krista scholdberg", "111"},
-            {"ashley stewart", "112" },
-            { "cadale thomas", "113"},
-            { "jennifer evans", "114"},
-            { "richard raponi", "115"},
-            { "mary winkelman","116" },
-            { "imari childress","117" },
-            { "jacob lockyer","118" },
-            { "quinn bennet","119"},
-            { "margaret landefield","120" },
-            { "kim vargas", "121" },
-            { "cameron robinson", "122"},
-            { "sirahn butler", "123"},
-            { "lawrence hudson","124" }
+            { "Krista Scholdberg", "111"},
+            { "Ashley Stewart", "112" },
+            { "Cadale Thomas", "113"},
+            { "Jennifer Evans", "114"},
+            { "Richard Raponi", "115"},
+            { "Mary Winkelman","116" },
+            { "Imari Childress","117" },
+            { "Jacob Lockyer","118" },
+            { "Quinn Bennet","119"},
+            { "Margaret Landefield","120" },
+            { "Kim Vargas", "121" },
+            { "Cameron Robinson", "122"},
+            { "Sirahn Butler", "123"},
+            { "Lawrence Hudson","124" }
         };
 
         List<string> coList = new List<string>();
-
-        public List<string> LowerCaseStudents()
-        {
-            List<string> students = new List<string> { "Krista Scholdberg", "Ashley Stewart", "Cadale Thomas", "Lawrence Hudson", "Jennifer Evans", "Kimberly Vargas", "Jacob Lockyer", "Richard Raponi", "Imari Childress", "Mary Winkelman", "Cameron Robinson", "Margaret Landefield", "Quinn Bennett" };
-            List<string> LCstudents = new List<string>();
-
-            for (int i = 0; i < students.Count; i++)
-            {
-                students[i] = students[i].ToLower();
-                LCstudents.Add(students[i]);
-            }
-
-            return LCstudents;
-        }
 
         public Dictionary<string, bool> MakeDictionary ()
         {
@@ -70,17 +51,6 @@ namespace Week7Project
             return resources;
         }
 
-        public List<string> MakeLCResourcesList (Dictionary<string, bool> resources)
-        {
-            List<string> lcresources = new List<string>();
-            string key;
-            foreach (KeyValuePair <string, bool> pair in resources)
-            {
-                key = pair.Key.ToLower();
-                lcresources.Add(key);
-            }
-
-            return lcresources;
-        }
+       
     }
 }

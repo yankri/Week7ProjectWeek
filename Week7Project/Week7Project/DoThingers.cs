@@ -21,12 +21,12 @@ namespace Week7Project
             return false;
         }
 
-        public static bool CIContains(List<string> students, string name) //case insenstive contains method for lists
+        public static bool CIContains(Dictionary<string, string> students, string name) //case insenstive contains method for lists
 
         {
-            for (int i = 0; i < students.Count; i++)
+            foreach (KeyValuePair<string, string> pair in students)
             {
-                if (students[i].Equals(name, StringComparison.CurrentCultureIgnoreCase))
+                if (pair.Key.Equals(name, StringComparison.CurrentCultureIgnoreCase))
                 {
                     return true;
                 }
