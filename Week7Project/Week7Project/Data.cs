@@ -61,10 +61,10 @@ namespace Week7Project
 
         public Dictionary<string, bool> MakeDictionary ()
         {
-            Dictionary<string, bool> resources = new Dictionary<string, bool>(StringComparer.InvariantCultureIgnoreCase);
             FileReader reader = new FileReader();
 
-            resources = reader.PopulateAvailableResourcesInDictionary();
+            Dictionary<string, bool> resources = reader.PopulateAvailableResourcesInDictionary();
+
             reader.PopulateCheckedOutResourcesInDictionary(resources);
 
             return resources;

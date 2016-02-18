@@ -30,9 +30,9 @@ namespace Week7Project
             while (true)
             {
                 Console.WriteLine("Enter your name: ");
-                name = Console.ReadLine().ToLower();
+                name = Console.ReadLine();
 
-                if (data.LCStudents.Contains(name))
+                if (data.LCStudents.Contains(name.ToLower()))
                 {
                     break;
                 }
@@ -50,21 +50,27 @@ namespace Week7Project
                 if (resources.ContainsKey(title))
                 {
                     string filename = name + ".txt";
+                    string toDelete = null;
+                    int LineNumber = 0;
 
                     StreamReader reader = new StreamReader(filename);
                     using (reader)
                     {
-                        string line = "";
-                        while (line != null)
+                        while (!reader.EndOfStream)
                         {
-                            line = reader.ReadLine();
-
-                            if (resources.ContainsKey(line))
+                            string line = reader.ReadLine();
+                            LineNumber++;
+                            if (resources.ContainsKey(line) && resources[line] == false)
                             {
                                 resources[line] = true;
+                                toDelete = line;
                             }
                         }
                     }
+
+                    var oldLines = File.ReadAllLines(filename);
+                    var newLines = oldLines.Where(line => !line.Contains(toDelete));
+                    File.WriteAllLines(filename, newLines); 
                     break;
                 }
                 else
@@ -76,7 +82,8 @@ namespace Week7Project
 
             writer.WriteResourceFiles(resources);
             writer.StudentHeader(name);
-            
+            //need to rewrite student file, removing the resource
+
 
         }
 
