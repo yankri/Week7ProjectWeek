@@ -31,7 +31,8 @@ namespace Week7Project
             //add escapes from inner menus
             //add list of checked out items for the user when returning an item
             //make sure someone cant return something they dont have
-
+            //fix if there's nothing to return so it doesnt break
+            //ask if you'd like to return another (bonus: only if there's another to return)
         }
     }
 }
