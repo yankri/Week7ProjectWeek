@@ -7,35 +7,20 @@ using System.Threading.Tasks;
 
 namespace Week7Project
 {
-    class FileWriter
+    class FileWriter //This class handles all of the things that write to files. 
     {
-        public string resourceHeader (int choice)
+        private Data data { get; set; }
+
+        public FileWriter(Data data)
         {
-            StringBuilder resHeader = new StringBuilder();
-
-            switch (choice)
-            {
-                case 1: //all resources
-                    resHeader.Append("All Resources");
-                    break;
-                case 2: //Available resources
-                    resHeader.Append("Available Resources");
-                    break;
-                case 3://checked out resources
-                    resHeader.Append("Checked Out Resources");
-                    break;
-            }
-
-            return resHeader.ToString();
+            this.data = data;
         }
 
         public string StudentHeader(string studentName) //creates the header for the student's check out file
         {
             string studentID;
-            Data data = new Data();
 
             StringBuilder header = new StringBuilder();
-
             header.Append("Student: " + studentName);
             header.AppendLine();
             header.Append("Student ID: ");
@@ -45,7 +30,6 @@ namespace Week7Project
             if (data.StudentIDs.TryGetValue(name, out studentID) == true)
             {
                 studentID = data.StudentIDs[name]; 
-                Console.WriteLine(studentID);
                 header.Append(studentID);
             }
 
@@ -54,33 +38,24 @@ namespace Week7Project
             return header.ToString();
         }
 
-        public void WriteStudentFile(string name, List<string> COList)
+        public void WriteNewStudentFile(string name) //makes a new file for a new student in admin menu
         {
-            string filename = name + ".txt";
-            FileWriter writing = new FileWriter();
+            StringBuilder makeName = new StringBuilder();
+            makeName.Append(name);
+            makeName.Append(".txt");
+
+            string filename = makeName.ToString();
+
+            FileWriter writing = new FileWriter(data);
 
             StreamWriter writer = new StreamWriter(filename);
             using (writer)
             {
                 writer.WriteLine(writing.StudentHeader(name));
-
-                for (int i = 1; i < COList.Count; i++)
-                {
-                    writer.WriteLine(COList[i]);
-                }
             }
         }
 
-        public List<string> AddToList (string resource)
-        {
-            List<string> checkedOut = new List<string>();
-
-            checkedOut.Add(resource);
-
-            return checkedOut;
-        }
-
-        public void WriteResourceFiles (Dictionary<string, bool> resources)
+        public void WriteResourceFiles (Dictionary<string, bool> resources)  //writes the resource files
         {
             StreamWriter allResources = new StreamWriter("ResourceList.txt");
 
@@ -119,16 +94,26 @@ namespace Week7Project
             }
         }
 
-        public void CheckOutResource (List<string> COList) 
-        {
-            FileWriter writer = new FileWriter();
-            Data data = new Data();
+        public void CheckOutResource (Dictionary<string, List<string>> studentCheckOuts, string name)
+        {   //writes the student's file when checking out and updates the resources dictionary bools
+            FileWriter writer = new FileWriter(data);
 
             Dictionary <string, bool> resources = data.Resources;
 
-            string fileName = COList[0] + ".txt";
+            foreach (KeyValuePair<string, List<string>> pair in studentCheckOuts)
+            {
+                if (pair.Key.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    name = pair.Key;
+                    break;
+                }
+            }
 
-            string header = writer.StudentHeader(COList[0]);
+            List<string> studentList = studentCheckOuts[name];
+
+            string fileName = name + ".txt";
+
+            string header = writer.StudentHeader(name);
 
             StreamWriter writing = new StreamWriter(fileName);
             using (writing) 
@@ -137,22 +122,45 @@ namespace Week7Project
                 writing.WriteLine();
                 writing.WriteLine("Checked Out Resources: ");
 
-                for (int i = 1; i < COList.Count; i++)
+                for (int i = 0; i < studentList.Count; i++)
                 {
-                    writing.WriteLine(COList[i]);
+                    writing.WriteLine(studentList[i]);
                 }
             }
 
-            for (int i = 0; i < COList.Count; i++) //updates the resources dictionary
+            for (int i = 0; i < studentList.Count; i++) //updates the resources dictionary
             {
-                if (resources.ContainsKey(COList[i]))
+                if (resources.ContainsKey(studentList[i]))
                 {
-                    resources[COList[i]] = false; //false because its no longer available
+                    resources[studentList[i]] = false; //false because its no longer available
                 }
             }
         }
 
+        public void ReWriteMasterResourcesFile ()
+        {
+            StreamWriter writer = new StreamWriter("ResourceList.txt");
 
+            using (writer)
+            {
+                foreach (KeyValuePair<string, bool> pair in data.Resources)
+                {
+                    writer.WriteLine(pair.Key);
+                }
+            }
+        }
+        
+        public void ReWriteMasterStudentFile(Dictionary<string, List<string>> studentCO)
+        {
+            StreamWriter writer = new StreamWriter("StudentList.txt");
 
+            using (writer)
+            {
+                foreach (KeyValuePair<string, List<string>> pair in studentCO)
+                {
+                    writer.WriteLine(pair.Key);
+                }
+            }
+        }
     }
 }

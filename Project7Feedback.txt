@@ -1,0 +1,21 @@
+*Not enough string builders in there yet*
+
+-Great exit message!! I couldn't find where to view what the currently checked out resources are for all students.  
+
+Yay, I like the green background.
+In view student accounts I couldn't remember the student names.  It may help to provide a list.  Interesting- when I was under View Student Accounts and entered Jennifer Evans it displayed "no books checked out" (or something like that), but when I entered Ashley Stewart the screen was blank.
+I like the option to check out another resource before exiting.  What happens if you attempt to check out a resource that does not exist?
+Thanks for providing a list of resources in student's account when returning item, this is a nice reminder.
+
+-provide a list of titles when asking which book the user is checking out bc it's hard to remember titles. 
+-what if i go to "view student accounts" and i can't remember the name of the student i want and I want to go back to the menu and look at "view students" list bc it won't let me out of "view student accounts" until i enter a valid name? eeeee! 
+-my suggestion would be to send the user back to the main menu after the error message
+
+
+__________
+
+
+would benefit from providing user a list of resources or student names at checkout / return 
+accepts any book name while checking out items rather than provide error message if. book does not exist.
+
+

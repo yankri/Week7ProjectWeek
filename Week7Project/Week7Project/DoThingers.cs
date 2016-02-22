@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Week7Project
 {
-    static class DoThingers
+    static class DoThingers //A normal person would have called this "utilities" but obviously it's a class that does things so it has to be DoThingers
     {
         public static bool CIContains (Dictionary<string, bool> resources, string title) //case insensitive contains method for dictionaries
         {
@@ -21,10 +21,10 @@ namespace Week7Project
             return false;
         }
 
-        public static bool CIContains(Dictionary<string, string> students, string name) //case insenstive contains method for lists
+        public static bool CIContains(Dictionary<string, List<string>> students, string name) //case insenstive contains method for lists
 
         {
-            foreach (KeyValuePair<string, string> pair in students)
+            foreach (KeyValuePair<string, List<string>> pair in students)
             {
                 if (pair.Key.Equals(name, StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -35,5 +35,6 @@ namespace Week7Project
             return false;
         }
 
+        
     }
 }

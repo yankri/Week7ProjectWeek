@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 
 namespace Week7Project
 {
-    class ItemReturn
+    class ItemReturn //This class handles returning an item.
     {
+        private Data data { get; set; }
 
-        public ItemReturn ()
+        public ItemReturn (Data data)
         {
-            COList = data.COList;
+            this.data = data;
             resources = data.Resources;
+            reader = new FileReader(data);
+            writer = new FileWriter(data);
         }
-        Data data = new Data();
-        FileReader reader = new FileReader();
-        FileWriter writer = new FileWriter();
 
-        List<string> COList;
+        FileReader reader;
+        FileWriter writer;
 
         Dictionary<string, bool> resources;
 
@@ -30,12 +31,26 @@ namespace Week7Project
 
             while (true)
             {
-                Console.WriteLine("Enter your name: ");
+                Console.Clear();
+                Console.WriteLine("Student names: ");
+                reader.CheckOutStudentList();
+                Console.WriteLine("\nEnter your name or \"quit\" to return to the main menu.");
                 name = Console.ReadLine();
 
-                if (data.StudentIDs.Keys.Contains(name.ToLower()))
+                bool quitter = data.MenuQuitter(name);
+                if (quitter == true)
                 {
-                    filename = name + ".txt";
+                    return;
+                }
+
+                if (data.StudentCheckOuts.Keys.Contains(name.ToLower()))
+                {
+                    StringBuilder fileName = new StringBuilder();
+
+                    fileName.Append(name);
+                    fileName.Append(".txt");
+
+                    filename = fileName.ToString();
                         
                     if (!File.Exists(filename))
                     {
@@ -58,8 +73,14 @@ namespace Week7Project
 
             while (true)
             {
-                Console.WriteLine("Enter the name of the resource you wish to return: ");
+                Console.WriteLine("Enter the name of the resource you wish to return or \"quit\" to return to the main menu. ");
                 string title = Console.ReadLine();
+
+                bool quitter = data.MenuQuitter(title);
+                if (quitter == true)
+                {
+                    return;
+                }
 
                 if (resources.ContainsKey(title))
                 {
@@ -84,6 +105,10 @@ namespace Week7Project
                         if (success == true)
                         {
                             resources[title] = true;
+                            writer.WriteResourceFiles(resources);
+                            writer.StudentHeader(name);
+                            Console.WriteLine(title + " has been returned. Press any key to continue.");
+                            Console.ReadKey();
                             break;
                         }
                         else
@@ -97,13 +122,10 @@ namespace Week7Project
                 }
                 else
                 {
-                    Console.WriteLine("\nThat title does not exist. Please try again.\n");
+                    Console.WriteLine("\nThat title does not exist. Please try again or enter \"quit\" to go back to the main menu.\n");
                     continue;
                 }
             }
-
-            writer.WriteResourceFiles(resources);
-            writer.StudentHeader(name);
         }
 
         public bool RemoveReturnedItemFromStudentFile (string filename, string toDelete)
@@ -117,14 +139,13 @@ namespace Week7Project
             }
                 File.WriteAllLines(filename, newLines);
                 return true; // means it did work and the resource was in the file 
-            
         }
 
-        public void ShowCheckedOutResources(string fileName)
-        {
+        public void ShowCheckedOutResources(string fileName) //used to show what the student already has checked out by reading their file
+        { //check if this is duplicated in ViewStudentAccount method 
             if (File.Exists(fileName))
             {
-                StreamReader reader = new StreamReader(fileName); //figure out how to check if a filename exists
+                StreamReader reader = new StreamReader(fileName); 
                 Console.Clear();
                 using (reader)
                 {
@@ -138,7 +159,6 @@ namespace Week7Project
                     }
                 }
             }
-           
         }
     }
 }
