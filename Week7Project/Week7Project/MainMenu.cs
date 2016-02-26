@@ -29,20 +29,20 @@ namespace Week7Project
         public void Menu() //initializes all the classes and handles menu option input
         {
             bool close = false;
+            Data data = new Data();
+            FileReader reader = new FileReader(data);
+            FileWriter writer = new FileWriter(data);
+            ItemCheckOut checkout = new ItemCheckOut(data);
+            ItemReturn returnItem = new ItemReturn(data);
+            Dictionary<string, bool> resources = data.Resources;
+            Dictionary<string, List<string>> studentCheckOuts = data.StudentCheckOuts;
+            AdminMenu admin = new AdminMenu(data);
 
             while (close == false)
             {
                 Console.Clear();
                 PrintMenu();
-                Data data = new Data();
-                FileReader reader = new FileReader(data);
-                FileWriter writer  = new FileWriter(data);
-                ItemCheckOut checkout = new ItemCheckOut(data); 
-                ItemReturn returnItem = new ItemReturn(data);
-                Dictionary<string, bool> resources = data.Resources;
-                Dictionary<string, List<string>> studentCheckOuts = data.StudentCheckOuts;
-                AdminMenu admin = new AdminMenu(data);
-
+                
                 int choice;
                 string menuChoice = Console.ReadLine();
                 Console.WriteLine();
