@@ -103,6 +103,7 @@ namespace Week7Project
             }
 
             Console.WriteLine("\nSuch quitting. Very check out. Wow.\n\n");
+            Console.ReadKey();
         }
     }
 }

@@ -7,4 +7,3 @@ Ruby on Rails
 SQL Databases
 Git for Beginners
 Javascript for Kids
-Visual C#
